@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#b91c2c">
+<title>Petualangan Pintar — Misi Pahlawan Pancasila</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Baloo+2:wght@600;700;800&display=swap');
+:root{--red:#c62838;--red2:#ef4757;--navy:#142b4a;--blue:#2878b9;--gold:#f5b942;--cream:#fff9ef;--ink:#203047;--muted:#68778b;--green:#198754;--shadow:0 16px 40px #172b4a1c}
+*{box-sizing:border-box}body{margin:0;font-family:Nunito,system-ui,sans-serif;color:var(--ink);background:linear-gradient(135deg,#fff7eb,#eaf4ff);min-height:100vh}
+button,input{font:inherit}button{cursor:pointer;border:0}
+.topbar{height:9px;background:linear-gradient(90deg,var(--red) 50%,white 50%)}
+.wrap{width:min(1000px,92vw);margin:0 auto;padding:24px 0 42px}
+.brand{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:20px}
+.logo{font:800 1.05rem 'Baloo 2';color:var(--navy);letter-spacing:.4px}.logo span{color:var(--red)}
+.pill{background:#fff;border:1px solid #e5eaf0;padding:8px 13px;border-radius:99px;font-weight:800;font-size:.82rem}
+.screen{display:none;animation:rise .35s ease}.screen.active{display:block}@keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.panel{background:#fff;border:1px solid #edf0f4;border-radius:26px;padding:clamp(22px,5vw,46px);box-shadow:var(--shadow)}
+.hero{display:grid;grid-template-columns:1.1fr .9fr;align-items:center;gap:28px;overflow:hidden;position:relative}
+.eyebrow{color:var(--red);font-weight:900;text-transform:uppercase;letter-spacing:1.5px;font-size:.78rem}
+h1,h2,h3,p{margin-top:0}h1{font:800 clamp(2.3rem,6vw,4.2rem)/.98 'Baloo 2';color:var(--navy);margin:12px 0}
+h1 em{font-style:normal;color:var(--red)}h2{font:800 clamp(1.6rem,4vw,2.35rem) 'Baloo 2';color:var(--navy);margin-bottom:8px}
+.lead{font-size:1.08rem;color:var(--muted);line-height:1.65}
+.hero-art{min-height:270px;border-radius:24px;background:linear-gradient(145deg,#e6f3ff,#fff1d7);display:grid;place-items:center;position:relative}
+.art-flag{font-size:clamp(5rem,14vw,9rem);filter:drop-shadow(0 12px 8px #182d4a22);animation:float 3s ease-in-out infinite}
+@keyframes float{50%{transform:translateY(-10px) rotate(-2deg)}}
+.art-badge{position:absolute;right:12%;bottom:12%;background:#fff;border-radius:18px;padding:12px 16px;font-weight:900;box-shadow:var(--shadow);transform:rotate(-5deg)}
+.field{display:block;margin:20px 0 12px;font-weight:900}.name-input{width:100%;padding:15px 17px;border:2px solid #e3e8ef;border-radius:14px;outline:none}.name-input:focus{border-color:var(--blue)}
+.btn{padding:13px 20px;border-radius:14px;font-weight:900;transition:.2s;display:inline-flex;align-items:center;justify-content:center;gap:8px}
+.btn:hover{transform:translateY(-2px);filter:brightness(1.04)}.primary{background:var(--red);color:#fff;box-shadow:0 7px 0 #941b2a}.secondary{background:#eaf3fb;color:var(--navy)}.gold{background:var(--gold);color:#4c3500}.ghost{background:#fff;border:1px solid #e3e8ef;color:var(--ink)}
+.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:18px}.small{font-size:.85rem;color:var(--muted);margin:18px 0 0}
+.instructions{line-height:1.7;color:var(--muted)}.instructions li{margin:8px 0}
+.worlds{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:22px}
+.world{padding:22px;border:2px solid #e9edf2;border-radius:22px;background:#fff;cursor:pointer;transition:.2s}.world:hover{transform:translateY(-4px);border-color:var(--gold)}
+.world .emoji{font-size:2.5rem}.world h3{font:800 1.35rem 'Baloo 2';margin:8px 0 4px;color:var(--navy)}.world p{color:var(--muted);margin:0;font-size:.92rem}
+.world.locked{opacity:.5;cursor:not-allowed}
+.hud{display:grid;grid-template-columns:1fr auto auto auto;gap:10px;align-items:center;margin-bottom:16px}
+.progress{height:10px;background:#e8edf3;border-radius:99px;overflow:hidden;margin-top:8px}.progress>div{height:100%;width:0;background:linear-gradient(90deg,var(--red),#ff9a61);transition:width .3s}
+.hudbox{background:#fff;padding:10px 14px;border-radius:14px;font-weight:900;box-shadow:0 4px 14px #172b4a0c;white-space:nowrap}
+.question-head{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:12px}
+.tag{display:inline-block;background:#fff0e9;color:#b52b37;padding:7px 12px;border-radius:99px;font-weight:900;font-size:.78rem}
+.question{font:800 clamp(1.3rem,3vw,1.8rem)/1.3 'Baloo 2';color:var(--navy);margin:18px 0}
+.subquestion{color:var(--muted);margin-bottom:18px}
+.options{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.option{padding:15px 16px;border:2px solid #e5eaf0;border-radius:15px;background:#fff;text-align:left;font-weight:800;color:var(--ink);transition:.18s;min-height:58px}
+.option:hover{border-color:var(--blue);background:#f4faff}.option.selected{border-color:var(--blue);background:#eaf5ff}.option.correct{border-color:var(--green);background:#e9f8f0}.option.wrong{border-color:var(--red);background:#fff0f0}
+.feedback{padding:13px 15px;border-radius:14px;margin-top:16px;font-weight:800;display:none;line-height:1.5}.feedback.show{display:block}.feedback.good{background:#e9f8f0;color:#146c43}.feedback.bad{background:#fff0f0;color:#a51f2b}
+.bottom-row{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-top:20px;flex-wrap:wrap}
+.hint{color:#8a6412;font-size:.9rem;font-weight:800}
+.wordbank,.sequence{display:flex;gap:9px;flex-wrap:wrap;margin:16px 0}
+.tile{padding:11px 14px;background:#fff5d9;border:2px solid #f1cf75;border-radius:12px;font-weight:900;color:#644600}
+.tile.used{opacity:.3;pointer-events:none}.slot{min-width:70px;min-height:48px;border:2px dashed #b7c3d1;border-radius:12px;padding:8px;background:#f8fafc;font-weight:900}
+.slot.filled{border-style:solid;border-color:#8ab7d9;background:#edf7ff}
+.match-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.match-col{display:grid;gap:10px}.match-item{padding:13px;border:2px solid #e5eaf0;border-radius:13px;background:#fff;text-align:left;font-weight:800;min-height:54px}.match-item.active{border-color:var(--blue);background:#eaf5ff}.match-item.done{border-color:var(--green);background:#e9f8f0}
+.casebox{background:#f4f8fc;border-left:4px solid var(--blue);padding:15px;border-radius:12px;line-height:1.6;margin-bottom:16px}
+.result{text-align:center}.medal{font-size:5rem;animation:float 2.5s infinite}.score{font:800 3.5rem 'Baloo 2';color:var(--red);margin:0}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:22px 0}.stat{background:#f5f8fb;padding:15px;border-radius:15px}.stat strong{display:block;font:800 1.5rem 'Baloo 2';color:var(--navy)}
+footer{text-align:center;color:#8995a4;font-size:.8rem;margin-top:24px}
+.confetti{position:fixed;top:-20px;width:9px;height:14px;z-index:10;animation:fall 3.2s linear forwards}@keyframes fall{to{transform:translateY(110vh) rotate(700deg);opacity:.2}}
+@media(max-width:700px){.hero{grid-template-columns:1fr}.hero-art{min-height:190px;grid-row:1}.worlds{grid-template-columns:1fr}.hud{grid-template-columns:1fr 1fr}.options{grid-template-columns:1fr}.match-grid{grid-template-columns:1fr 1fr}.brand{align-items:flex-start}.stats{grid-template-columns:1fr 1fr 1fr}.panel{border-radius:20px}}
+</style>
+</head>
+<body>
+<div class="topbar"></div>
+<div class="wrap">
+  <header class="brand"><div class="logo">🇮🇩 PETUALANGAN <span>PINTAR</span></div><div class="pill">Pendidikan Pancasila • Kelas VII</div></header>
+
+  <section id="home" class="screen active panel hero">
+    <div>
+      <div class="eyebrow">Game edukasi • Belajar sambil bermain</div>
+      <h1>Petualangan <em>Pintar</em></h1>
+      <h2>Misi Pahlawan Pancasila</h2>
+      <p class="lead">Jelajahi misteri Proklamasi dan taklukkan tantangan Dunia Norma. Kumpulkan poin, pecahkan puzzle, dan raih gelar Pahlawan Pancasila!</p>
+      <label class="field" for="playerName">Siapa nama petualang?</label>
+      <input id="playerName" class="name-input" maxlength="24" placeholder="Masukkan nama kamu..." autocomplete="given-name">
+      <div class="actions"><button class="btn primary" id="startBtn">🚀 MULAI BERMAIN</button><button class="btn secondary" id="guideBtn">📖 Petunjuk</button></div>
+      <p class="small">✨ 2 dunia • 20 tantangan • 3 kesempatan • Hadiah bintang</p>
+    </div>
+    <div class="hero-art"><div class="art-flag">🇮🇩</div><div class="art-badge">🏆 Misi dimulai!</div></div>
+  </section>
+
+  <section id="guide" class="screen panel">
+    <div class="eyebrow">Sebelum memulai</div><h2>📖 Cara Bermain</h2>
+    <ol class="instructions">
+      <li>Masukkan nama, lalu tekan <b>Mulai Bermain</b>.</li>
+      <li>Selesaikan 10 tantangan di setiap dunia. Bentuk tantangan beragam: pilihan ganda, susun kata, pasangan, urutan peristiwa, dan studi kasus.</li>
+      <li>Jawaban benar mendapat 10 poin. Gunakan tombol petunjuk jika membutuhkan bantuan.</li>
+      <li>Kamu memiliki 3 nyawa. Jawaban salah mengurangi 1 nyawa, tetapi kamu tetap dapat melanjutkan belajar hingga semua tantangan selesai.</li>
+      <li>Setiap soal memiliki batas waktu 60 detik. Waktu habis dihitung sebagai jawaban salah.</li>
+      <li>Selesaikan Dunia Proklamasi untuk membuka Dunia Norma. Raih skor terbaikmu!</li>
+    </ol>
+    <div class="actions"><button class="btn primary" id="guideBack">Siap, ayo bermain!</button><button class="btn ghost" data-home>Menu utama</button></div>
+  </section>
+
+  <section id="map" class="screen panel">
+    <div class="eyebrow">Peta petualangan</div><h2 id="welcomeTitle">Pilih duniamu!</h2><p class="lead">Selesaikan kedua dunia untuk menjadi Pahlawan Pancasila.</p>
+    <div class="worlds">
+      <article class="world" id="world1"><div class="emoji">📜</div><h3>Level 1: Misteri Proklamasi</h3><p>Telusuri peristiwa, tokoh, dan makna kemerdekaan Indonesia.</p><div class="small">10 tantangan • Sejarah Indonesia</div></article>
+      <article class="world locked" id="world2"><div class="emoji">⚖️</div><h3>Level 2: Petualangan Dunia Norma</h3><p>Kenali aturan, jenis norma, dan penerapannya sehari-hari.</p><div class="small" id="lockText">🔒 Selesaikan Level 1 untuk membuka</div></article>
+    </div>
+    <div class="actions"><button class="btn ghost" data-home>Keluar ke menu</button></div>
+  </section>
+
+  <section id="play" class="screen">
+    <div class="hud">
+      <div class="hudbox"><span id="levelLabel">LEVEL 1</span><div class="progress"><div id="progressFill"></div></div></div>
+      <div class="hudbox">⭐ <span id="score">0</span></div>
+      <div class="hudbox">❤️ <span id="lives">3</span></div>
+      <div class="hudbox">⏱️ <span id="timer">60</span>s</div>
+    </div>
+    <div class="panel">
+      <div class="question-head"><span class="tag" id="typeTag">PILIHAN GANDA</span><span class="pill" id="questionCount">1 / 10</span></div>
+      <div class="eyebrow" id="topicLabel">Misteri Proklamasi</div>
+      <div class="question" id="questionText"></div>
+      <div class="subquestion" id="questionSub"></div>
+      <div id="interaction"></div>
+      <div id="feedback" class="feedback" role="status" aria-live="polite"></div>
+      <div class="bottom-row"><span class="hint" id="hintText">💡 Petunjuk tersedia</span><div class="actions" style="margin:0"><button class="btn secondary" id="hintBtn">💡 Petunjuk</button><button class="btn primary" id="checkBtn">Periksa jawaban</button><button class="btn gold" id="nextBtn" hidden>Lanjut ➜</button></div></div>
+    </div>
+    <div class="actions"><button class="btn ghost" id="mapBtn">↩ Peta petualangan</button></div>
+  </section>
+
+  <section id="result" class="screen panel result">
+    <div class="medal" id="medal">🏆</div><div class="eyebrow">Misi selesai</div><h2 id="resultTitle">Hebat, Petualang!</h2>
+    <p class="lead" id="resultMessage"></p><p class="score" id="finalScore">0</p><div>SKOR AKHIR</div>
+    <div class="stats"><div class="stat"><strong id="correctStat">0</strong>Jawaban benar</div><div class="stat"><strong id="wrongStat">0</strong>Jawaban salah</div><div class="stat"><strong id="starStat">☆☆☆</strong>Bintang</div></div>
+    <h3 id="rankTitle">Pahlawan Pancasila</h3><p id="rankMessage" class="lead"></p>
+    <div class="actions" style="justify-content:center"><button class="btn primary" id="againBtn">🔄 Main lagi</button><button class="btn secondary" id="resultMapBtn">🗺️ Peta petualangan</button></div>
+  </section>
+  <footer>Game Edukasi Pendidikan Pancasila Kelas VII • Belajar, bermain, dan berkarakter 🇮🇩</footer>
+</div>
+
+<script>
+const $ = id => document.getElementById(id);
+const screens = ['home','guide','map','play','result'];
+function show(id){screens.forEach(s=>$(s).classList.toggle('active',s===id));window.scrollTo({top:0,behavior:'smooth'});}
+let player='Petualang',score=0,correct=0,wrong=0,lives=3,level=0,index=0,timer=60,tick=null,answered=false,selected=null,usedHint=false,matchLeft=null,matchPairs={},sequenceAnswer=[];
+const levels = [
+{title:'Misteri Proklamasi',questions:[
+{type:'Pilihan ganda',q:'Kapan Indonesia memproklamasikan kemerdekaannya?',opts:['17 Agustus 1945','20 Mei 1908','28 Oktober 1928','10 November 1945'],a:0,why:'Proklamasi Kemerdekaan Indonesia dibacakan pada Jumat, 17 Agustus 1945.',hint:'Peristiwa ini diperingati setiap tanggal 17 Agustus.'},
+{type:'Pilihan ganda',q:'Siapa yang membacakan teks Proklamasi Kemerdekaan?',opts:['Mohammad Hatta','Ir. Soekarno','Ahmad Soebardjo','Sayuti Melik'],a:1,why:'Ir. Soekarno membacakan teks proklamasi didampingi Mohammad Hatta.',hint:'Tokoh ini kemudian menjadi presiden pertama Indonesia.'},
+{type:'Pilihan ganda',q:'Di mana teks proklamasi dibacakan?',opts:['Istana Negara','Lapangan Ikada','Jalan Pegangsaan Timur No. 56, Jakarta','Gedung Sumpah Pemuda'],a:2,why:'Pembacaan berlangsung di kediaman Soekarno, Jalan Pegangsaan Timur No. 56, Jakarta.',hint:'Tempat tersebut merupakan kediaman Soekarno di Jakarta.'},
+{type:'Pilihan ganda',q:'Siapa yang mengetik naskah Proklamasi?',opts:['Sayuti Melik','Soekarni','Wikana','Ahmad Soebardjo'],a:0,why:'Sayuti Melik mengetik naskah proklamasi dengan beberapa perubahan dari tulisan tangan.',hint:'Namanya dikenal sebagai seorang wartawan.'},
+{type:'Pilihan ganda',q:'Apa makna utama Proklamasi bagi bangsa Indonesia?',opts:['Awal penjajahan','Pernyataan kemerdekaan dan lahirnya Indonesia merdeka','Pembentukan organisasi baru','Berakhirnya seluruh perjuangan bangsa'],a:1,why:'Proklamasi menyatakan kemerdekaan Indonesia dan menjadi awal kehidupan sebagai bangsa merdeka.',hint:'Proklamasi menandai bahwa Indonesia tidak lagi menyatakan diri sebagai bangsa terjajah.'},
+{type:'Susun kata',q:'Susun huruf berikut menjadi nama peristiwa penculikan Soekarno-Hatta ke luar Jakarta menjelang proklamasi.',answer:'RENGASDENGKLOK',tiles:['KLOK','REN','GAS','DENG'],why:'Peristiwa Rengasdengklok terjadi pada 16 Agustus 1945 untuk mendesak proklamasi segera dilaksanakan.',hint:'Peristiwa ini terjadi di sebuah daerah di Karawang, Jawa Barat.',scramble:true},
+{type:'Pasangkan tokoh',q:'Cocokkan tokoh dengan perannya dalam peristiwa proklamasi.',pairs:[['Ir. Soekarno','Membacakan teks proklamasi'],['Mohammad Hatta','Mendampingi Soekarno saat proklamasi'],['Sayuti Melik','Mengetik naskah proklamasi']],why:'Ketiga tokoh memiliki peran penting dalam proses proklamasi.',hint:'Ingat: pembaca, pendamping pembaca, dan pengetik naskah.'},
+{type:'Urutkan peristiwa',q:'Susun peristiwa berikut dari yang lebih dahulu hingga paling akhir.',items:['Peristiwa Rengasdengklok','Perumusan teks di rumah Laksamana Maeda','Pembacaan Proklamasi'],order:[0,1,2],why:'Rengasdengklok terjadi 16 Agustus; perumusan teks berlangsung malam 16 Agustus; pembacaan dilakukan pagi 17 Agustus 1945.',hint:'Perhatikan tanggal 16 Agustus dan pagi 17 Agustus 1945.'},
+{type:'Pilihan ganda',q:'Siapa tokoh yang mengusulkan agar naskah proklamasi ditandatangani oleh Soekarno dan Hatta atas nama bangsa Indonesia?',opts:['Soekarni','Wikana','Sutan Sjahrir','Sayuti Melik'],a:0,why:'Soekarni mengusulkan agar teks ditandatangani oleh Soekarno dan Hatta atas nama bangsa Indonesia.',hint:'Tokoh ini juga berperan dalam golongan muda.'},
+{type:'Pilihan ganda',q:'Di rumah siapa naskah proklamasi dirumuskan?',opts:['Laksamana Tadashi Maeda','Jenderal Terauchi','Ki Hajar Dewantara','Mohammad Yamin'],a:0,why:'Naskah proklamasi dirumuskan di rumah Laksamana Tadashi Maeda, Jalan Imam Bonjol No. 1, Jakarta.',hint:'Ia adalah perwira Angkatan Laut Jepang yang memberi tempat untuk perumusan naskah.'}
+]},
+{title:'Petualangan Dunia Norma',questions:[
+{type:'Pilihan ganda',q:'Apa yang dimaksud dengan norma?',opts:['Aturan atau pedoman perilaku dalam kehidupan','Permainan tradisional','Kegiatan olahraga','Keinginan pribadi yang bebas dilakukan'],a:0,why:'Norma merupakan aturan atau pedoman yang mengatur perilaku manusia dalam kehidupan bersama.',hint:'Norma membantu kehidupan masyarakat menjadi tertib.'},
+{type:'Pilihan ganda',q:'Norma yang bersumber dari ajaran Tuhan disebut norma ...',opts:['Hukum','Kesopanan','Agama','Kesusilaan'],a:2,why:'Norma agama bersumber dari ajaran Tuhan yang disampaikan melalui agama.',hint:'Sumbernya adalah ajaran kepercayaan kepada Tuhan.'},
+{type:'Pilihan ganda',q:'Mengucapkan salam dan berbicara santun kepada orang yang lebih tua merupakan contoh norma ...',opts:['Kesopanan','Hukum','Ekonomi','Politik'],a:0,why:'Norma kesopanan berkaitan dengan tata krama dan kebiasaan dalam pergaulan masyarakat.',hint:'Norma ini berkaitan dengan tata krama.'},
+{type:'Pilihan ganda',q:'Norma yang memiliki sanksi tegas dan dapat dipaksakan oleh negara adalah norma ...',opts:['Kesusilaan','Hukum','Kesopanan','Kebiasaan'],a:1,why:'Norma hukum dibuat atau ditetapkan oleh lembaga berwenang dan memiliki sanksi tegas.',hint:'Aturan ini ditegakkan oleh aparat dan lembaga negara.'},
+{type:'Pilihan ganda',q:'Contoh pelanggaran norma kesusilaan adalah ...',opts:['Berkata jujur','Membantu teman','Berbohong kepada orang lain','Menghormati guru'],a:2,why:'Norma kesusilaan bersumber dari hati nurani; berbohong bertentangan dengan nilai kejujuran.',hint:'Pilih perilaku yang bertentangan dengan hati nurani.'},
+{type:'Klasifikasi norma',q:'Pilih jenis norma yang paling tepat untuk setiap contoh perilaku.',items:[['Beribadah sesuai ajaran agama','Agama'],['Mengembalikan barang yang ditemukan karena hati nurani','Kesusilaan'],['Mengantre dan berbicara santun','Kesopanan'],['Mematuhi rambu lalu lintas','Hukum']],why:'Norma agama bersumber dari ajaran Tuhan; kesusilaan dari hati nurani; kesopanan dari tata pergaulan; hukum dari aturan resmi negara.',hint:'Pikirkan sumber aturannya: Tuhan, hati nurani, kebiasaan pergaulan, atau negara.'},
+{type:'Benar atau salah',q:'Norma hukum memiliki sanksi yang tegas dan dapat dipaksakan oleh negara.',opts:['Benar','Salah'],a:0,why:'Benar. Norma hukum memiliki sanksi resmi dan penegakannya dilakukan oleh lembaga berwenang.',hint:'Norma hukum berbeda dari teguran sosial karena ada sanksi resmi.'},
+{type:'Studi kasus',q:'Kamu menemukan dompet di halaman sekolah. Apa tindakan paling tepat?',case:'Dompet tersebut berisi uang dan kartu identitas pemilik. Tidak ada orang yang melihat ketika kamu menemukannya.',opts:['Menyimpan uangnya','Membuangnya','Menyerahkan kepada guru atau petugas sekolah','Memberikannya kepada teman'],a:2,why:'Mengembalikan barang temuan menunjukkan kejujuran dan tanggung jawab, sesuai norma kesusilaan.',hint:'Pilih tindakan jujur dan bertanggung jawab.'},
+{type:'Pilihan ganda',q:'Apa salah satu tujuan utama adanya norma dalam masyarakat?',opts:['Membatasi semua kegiatan positif','Menciptakan ketertiban dan keharmonisan','Membuat orang saling bersaing','Menghilangkan hak setiap orang'],a:1,why:'Norma menjadi pedoman agar hak dan kewajiban dihormati serta kehidupan bersama tertib dan harmonis.',hint:'Bayangkan keadaan masyarakat jika tidak ada aturan bersama.'},
+{type:'Teka-teki',q:'Aku berasal dari hati nurani. Jika dilanggar, seseorang dapat merasa bersalah atau menyesal. Siapakah aku?',opts:['Norma hukum','Norma agama','Norma kesusilaan','Norma kesopanan'],a:2,why:'Norma kesusilaan bersumber dari hati nurani manusia dan berkaitan dengan baik-buruk perilaku.',hint:'Kata kuncinya adalah hati nurani dan rasa bersalah.'}
+]}
+];
+function resetGame(){score=0;correct=0;wrong=0;lives=3;level=0;index=0;clearInterval(tick);$('score').textContent=score;$('lives').textContent=lives;}
+function startGame(){player=$('playerName').value.trim()||'Petualang';resetGame();$('welcomeTitle').textContent=`Semangat, ${player}! Pilih duniamu.`;show('map');}
+function startLevel(n){level=n;index=0;show('play');renderQuestion();}
+function renderQuestion(){
+ clearInterval(tick);answered=false;selected=null;usedHint=false;matchLeft=null;matchPairs={};sequenceAnswer=[];
+ const q=levels[level].questions[index];$('levelLabel').textContent=`LEVEL ${level+1} • ${levels[level].title}`;$('topicLabel').textContent=levels[level].title;$('questionCount').textContent=`${index+1} / ${levels[level].questions.length}`;$('questionText').textContent=q.q;$('questionSub').textContent=q.case||'Pilih atau susun jawaban yang paling tepat.';$('typeTag').textContent=q.type.toUpperCase();$('feedback').className='feedback';$('feedback').textContent='';$('hintText').textContent='💡 Petunjuk tersedia';$('hintBtn').disabled=false;$('checkBtn').hidden=false;$('checkBtn').disabled=false;$('nextBtn').hidden=true;$('interaction').innerHTML='';
+ $('progressFill').style.width=`${index/levels[level].questions.length*100}%`;
+ if(q.type==='Susun kata')renderWord(q);
+ else if(q.type==='Pasangkan tokoh')renderMatch(q);
+ else if(q.type==='Urutkan peristiwa')renderSequence(q);
+ else if(q.type==='Klasifikasi norma')renderClassify(q);
+ else renderOptions(q);
+ timer=60;$('timer').textContent=timer;tick=setInterval(()=>{timer--;$('timer').textContent=timer;if(timer<=0){clearInterval(tick);if(!answered){wrong++;lives=Math.max(0,lives-1);$('lives').textContent=lives;finishAnswer(false,'Waktu habis! '+q.why);}}},1000);
+}
+function renderOptions(q){const box=document.createElement('div');box.className='options';q.opts.forEach((o,i)=>{const b=document.createElement('button');b.className='option';b.textContent=String.fromCharCode(65+i)+'. '+o;b.onclick=()=>{if(answered)return;selected=i;[...box.children].forEach(x=>x.classList.remove('selected'));b.classList.add('selected');};box.appendChild(b);});$('interaction').appendChild(box);}
+function renderWord(q){const label=document.createElement('p');label.textContent='Pilih potongan huruf sesuai urutan untuk membentuk kata:';const slots=document.createElement('div');slots.className='sequence';slots.id='wordSlots';const tiles=document.createElement('div');tiles.className='wordbank';tiles.id='wordTiles';q.tiles.forEach((t,i)=>{const b=document.createElement('button');b.className='tile';b.textContent=t;b.onclick=()=>{if(answered||b.classList.contains('used'))return;const s=document.createElement('button');s.className='slot filled';s.textContent=t;s.dataset.tile=i;s.onclick=()=>{if(answered)return;b.remove();tiles.children[i].classList.remove('used');};slots.appendChild(s);b.classList.add('used');};tiles.appendChild(b);});$('interaction').append(label,slots,tiles);}
+function renderMatch(q){const grid=document.createElement('div');grid.className='match-grid';const left=document.createElement('div');left.className='match-col';const right=document.createElement('div');right.className='match-col';const shuffled=[...q.pairs].map(x=>x[1]).sort(()=>Math.random()-.5);q.pairs.forEach((p,i)=>{const b=document.createElement('button');b.className='match-item';b.textContent=p[0];b.dataset.index=i;b.onclick=()=>selectMatch(b,'left');left.appendChild(b);});shuffled.forEach((v)=>{const b=document.createElement('button');b.className='match-item';b.textContent=v;b.dataset.value=v;b.onclick=()=>selectMatch(b,'right');right.appendChild(b);});grid.append(left,right);$('interaction').appendChild(grid);}
+function selectMatch(btn,side){if(answered||btn.classList.contains('done'))return;if(side==='left'){document.querySelectorAll('.match-col:first-child .match-item').forEach(x=>x.classList.remove('active'));btn.classList.add('active');matchLeft=Number(btn.dataset.index);}else{const l=document.querySelector('.match-col:first-child .match-item.active');if(!l)return;const q=levels[level].questions[index],expected=q.pairs[matchLeft][1];if(btn.dataset.value===expected){l.classList.add('done');l.classList.remove('active');btn.classList.add('done');matchPairs[matchLeft]=true;matchLeft=null;}else{btn.classList.add('wrong');setTimeout(()=>btn.classList.remove('wrong'),450);}}}
+function renderSequence(q){const info=document.createElement('p');info.textContent='Klik peristiwa sesuai urutan waktu. Klik pilihan yang sudah masuk untuk membatalkan.';const chosen=document.createElement('div');chosen.className='sequence';chosen.id='chosenSeq';const bank=document.createElement('div');bank.className='wordbank';bank.id='seqBank';q.items.map((v,i)=>({v,i})).sort(()=>Math.random()-.5).forEach(({v,i})=>{const b=document.createElement('button');b.className='tile';b.textContent=v;b.dataset.i=i;b.onclick=()=>{if(answered||b.classList.contains('used'))return;sequenceAnswer.push(i);b.classList.add('used');const s=document.createElement('button');s.className='slot filled';s.textContent=sequenceAnswer.length+'. '+v;s.onclick=()=>{if(answered)return;sequenceAnswer=sequenceAnswer.filter(x=>x!==i);b.classList.remove('used');renderChosen();};chosen.appendChild(s);};bank.appendChild(b);});$('interaction').append(info,chosen,bank);}
+function renderChosen(){const c=$('chosenSeq');c.innerHTML='';sequenceAnswer.forEach((i,n)=>{const s=document.createElement('span');s.className='slot filled';s.textContent=(n+1)+'. '+levels[level].questions[index].items[i];c.appendChild(s);});}
+function renderClassify(q){const box=document.createElement('div');box.style.display='grid';box.style.gap='12px';q.items.forEach((item,i)=>{const row=document.createElement('div');row.style.cssText='display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:center';const text=document.createElement('strong');text.textContent=item[0];const sel=document.createElement('select');sel.className='name-input classify';sel.dataset.i=i;sel.style.padding='11px';sel.innerHTML='<option value="">Pilih jenis norma</option>'+['Agama','Kesusilaan','Kesopanan','Hukum'].map(x=>`<option>${x}</option>`).join('');row.append(text,sel);box.appendChild(row);});$('interaction').appendChild(box);}
+function validate(){const q=levels[level].questions[index];if(answered)return;let ok=false;
+ if(q.type==='Susun kata'){const value=[...$('wordSlots').children].map(x=>x.textContent).join('').toUpperCase();ok=value===q.answer;}
+ else if(q.type==='Pasangkan tokoh'){ok=Object.keys(matchPairs).length===q.pairs.length;}
+ else if(q.type==='Urutkan peristiwa'){ok=sequenceAnswer.length===q.order.length&&sequenceAnswer.every((v,i)=>v===q.order[i]);}
+ else if(q.type==='Klasifikasi norma'){const sels=[...document.querySelectorAll('.classify')];ok=sels.every((s,i)=>s.value===q.items[i][1]);}
+ else ok=selected===q.a;
+ if(!selected&&['Pilihan ganda','Benar atau salah','Studi kasus','Teka-teki'].includes(q.type)){showFeedback('Pilih salah satu jawaban terlebih dahulu.',false,false);return;}
+ if(q.type==='Klasifikasi norma'&&[...document.querySelectorAll('.classify')].some(s=>!s.value)){showFeedback('Lengkapi semua pilihan jenis norma terlebih dahulu.',false,false);return;}
+ if(q.type==='Susun kata'&&$('wordSlots').children.length===0){showFeedback('Susun potongan huruf terlebih dahulu.',false,false);return;}
+ if(q.type==='Pasangkan tokoh'&&Object.keys(matchPairs).length!==q.pairs.length){showFeedback('Cocokkan semua pasangan terlebih dahulu.',false,false);return;}
+ if(q.type==='Urutkan peristiwa'&&sequenceAnswer.length!==q.items.length){showFeedback('Urutkan semua peristiwa terlebih dahulu.',false,false);return;}
+ finishAnswer(ok,q.why);
+}
+function finishAnswer(ok,explanation){answered=true;clearInterval(tick);if(ok){correct++;score+=usedHint?3:5;}else{wrong++;lives=Math.max(0,lives-1);} $('score').textContent=score;$('lives').textContent=lives;$('progressFill').style.width=`${(index+1)/levels[level].questions.length*100}%`;$('checkBtn').hidden=true;$('hintBtn').disabled=true;$('nextBtn').hidden=false;$('nextBtn').textContent=index===levels[level].questions.length-1?(level===0?'Buka dunia berikutnya ➜':'Lihat hasil 🏆'):'Soal berikutnya ➜';showFeedback((ok?'🎉 Benar! ':'Belum tepat. ')+explanation,ok,true);}
+function showFeedback(msg,good,show){$('feedback').textContent=msg;$('feedback').className='feedback'+(show?' show':'')+(good?' good':' bad');}
+function hint(){if(answered)return;const q=levels[level].questions[index];$('hintText').textContent='💡 '+q.hint;usedHint=true;$('hintBtn').disabled=true;}
+function nextQuestion(){if(!answered)return;if(index<levels[level].questions.length-1){index++;renderQuestion();return;}clearInterval(tick);if(level===0){$('world2').classList.remove('locked');$('lockText').textContent='🔓 Terbuka! Ayo jelajahi dunia norma.';show('map');}else finishGame();}
+function finishGame(){clearInterval(tick);show('result');const total=20,percent=score;let rank,medal,msg;if(percent>=90){rank='Pahlawan Pancasila Sejati';medal='🏆';msg='Luar biasa! Pengetahuan dan semangat kebangsaanmu hebat.';}else if(percent>=80){rank='Penjaga Kemerdekaan';medal='🥇';msg='Kerja bagus! Kamu memahami materi dengan sangat baik.';}else if(percent>=70){rank='Pejuang Cerdas';medal='🥈';msg='Bagus! Terus tingkatkan pengetahuan dan semangat belajarmu.';}else{rank='Pejuang Pantang Menyerah';medal='🌟';msg='Jangan menyerah. Belajar lagi dan coba tantangannya sekali lagi!';}
+ $('medal').textContent=medal;$('resultTitle').textContent=`Hebat, ${player}!`;$('resultMessage').textContent='Kamu telah menyelesaikan 20 tantangan Petualangan Pintar.';$('finalScore').textContent=score+'/100';$('correctStat').textContent=correct;$('wrongStat').textContent=wrong;$('starStat').textContent=percent>=90?'★★★':percent>=80?'★★☆':percent>=70?'★☆☆':'☆☆☆';$('rankTitle').textContent=rank;$('rankMessage').textContent=msg;confetti();}
+function confetti(){for(let i=0;i<65;i++){const e=document.createElement('i');e.className='confetti';e.style.left=Math.random()*100+'vw';e.style.background=['#c62838','#f5b942','#2878b9','#198754'][i%4];e.style.animationDelay=Math.random()*1.5+'s';document.body.appendChild(e);setTimeout(()=>e.remove(),4800);}}
+$('startBtn').onclick=startGame;$('guideBtn').onclick=()=>show('guide');$('guideBack').onclick=startGame;$('world1').onclick=()=>startLevel(0);$('world2').onclick=()=>{if(!$('world2').classList.contains('locked'))startLevel(1);};$('checkBtn').onclick=validate;$('hintBtn').onclick=hint;$('nextBtn').onclick=nextQuestion;$('mapBtn').onclick=()=>{clearInterval(tick);show('map');};$('resultMapBtn').onclick=()=>show('map');$('againBtn').onclick=()=>{ $('world2').classList.add('locked');$('lockText').textContent='🔒 Selesaikan Level 1 untuk membuka';startGame();};document.querySelectorAll('[data-home]').forEach(b=>b.onclick=()=>{clearInterval(tick);show('home');});
+</script>
+</body>
+</html>
